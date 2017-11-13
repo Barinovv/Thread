@@ -1,34 +1,37 @@
 package ru.bav.chicken;
 
-public class ChickenOrEgg {
+public class ChickenOrEgg extends Thread {
+    public void run() {
+        for (int i = 0; i < 20; i++) {
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+            }
+            System.out.println("ЯЙЦО");
+        }
+    }
+
 
     public static void main(String[] args) {
-        Egg egg = new Egg();
-        Chicken chicken = new Chicken();
-        (new Thread(new Egg())).start();
-        (new Thread(new Chicken())).start();
-    }
-    public static class Egg extends Thread {
-        public void run() {
-            for (int i = 0; i < 20; i++) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                }
-                System.out.println("ЯЙЦО");
+        System.out.println("Начали спор");
+        Thread spor = new Thread(new ChickenOrEgg());
+        for (int i = 0; i < 20; i++) {
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
             }
+            System.out.println("КУРИЦА");
         }
-    }
-
-    public static class Chicken extends Thread {
-        public void run() {
-            for (int i = 0; i < 20; i++) {
-                try{
-                    Thread.sleep(1000);
-            }catch (InterruptedException e){
-                }
-                System.out.println("КУРИЦА");
+        if (spor.isAlive()) {
+            try {
+                spor.join();
+            } catch (InterruptedException e) {
             }
+            System.out.println("Первым было яйцо");
+        }else {
+            System.out.println("Первой была курица");
         }
+        System.out.println("Закончили спорить.");
     }
 }
+
