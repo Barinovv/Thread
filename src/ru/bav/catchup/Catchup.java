@@ -1,5 +1,10 @@
 package ru.bav.catchup;
 
+/**
+ * Класс, в котором выполяняются два потока и меняется их приоритет.
+ *
+ * @author Barinov Anton 15ИТ18
+ */
 
 public class Catchup extends Thread {   
     public void run() {
