@@ -1,7 +1,7 @@
 package ru.bav.catchup;
 
 
-public class Catchup extends Thread {
+public class Catchup extends Thread {   
     public void run() {
         setPriority(MIN_PRIORITY);
         for (int i = 0; i < 4000; i++) {
