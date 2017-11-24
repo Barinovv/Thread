@@ -25,3 +25,9 @@
 Этот репозиторий содержит программу, демонстрирующую совместный инкремент переменной i двумя потоками.
 
 <a href = "https://github.com/Barinovv/Thread/tree/master/src/ru/bav/interference"> Инкремент переменной i </a>
+
+# CopingFiles
+
+Этот репозиторий содержит программу, демонстрирующее копирование текста из файла и вставка в другой файл при помощи потоков.
+
+<a href = "https://github.com/Barinovv/Thread/tree/master/src/ru/bav/copingfiles"> Копирование файлов. </a>
