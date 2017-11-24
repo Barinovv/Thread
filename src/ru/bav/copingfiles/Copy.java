@@ -3,7 +3,7 @@ package ru.bav.copingfiles;
 import java.io.*;
 
 /*
-Класс
+Класс для копирования и вставки текста из файла в файл и подсчета времени.
  */
 
 public class Copy extends Thread {
