@@ -29,9 +29,8 @@ public class Copy extends Thread {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } {
-
         }
-        System.out.println((System.currentTimeMillis() - before) + " милесекунд(ы)");
+
+        System.out.println("Копирование - " + (System.currentTimeMillis() - before) + " милесекунд(ы)");
     }
 }
