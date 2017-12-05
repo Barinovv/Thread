@@ -10,15 +10,17 @@ public class Main {
         long first = System.currentTimeMillis();
         Copy read = new Copy("C:\\Users\\User\\IdeaProjects\\Thread\\src\\ru\\bav\\copingfiles\\main file.txt",
                 "C:\\Users\\User\\IdeaProjects\\Thread\\src\\ru\\bav\\copingfiles\\result file.txt");
+        read.start();
+
         if (read.isAlive()) {
             read.join();
         }
         System.out.println("Вставка в первый текстовик занимает - " + (System.currentTimeMillis() - first) + " милесекунд(ы)");
-long second = System.currentTimeMillis();
+        long second = System.currentTimeMillis();
         Copy read1 = new Copy("C:\\Users\\User\\IdeaProjects\\Thread\\src\\ru\\bav\\copingfiles\\main file.txt",
                 "C:\\Users\\User\\IdeaProjects\\Thread\\src\\ru\\bav\\copingfiles\\second result file.txt");
 
-        read.start();
+
         read1.start();
 
 
