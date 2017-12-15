@@ -39,7 +39,7 @@ public class Main {
                 Pattern email_pattern = Pattern.compile("\\s*(?<=data-url\\s?=\\s?\")[^>]*/*(?=\")");
                 Matcher matcher = email_pattern.matcher(result);
                 int i = 0;
-                while (matcher.find() && i < 2) {
+                while (matcher.find() && i < 2 ) {
                     outFile.write(matcher.group() + "\r\n");
                     i++;
                 }
