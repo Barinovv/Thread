@@ -39,7 +39,7 @@ public class Main {
                 Pattern email_pattern = Pattern.compile("\\s*(?<=data-url\\s?=\\s?\")[^>]*/*(?=\")");
                 Matcher matcher = email_pattern.matcher(result);
                 int i = 0;
-                while (matcher.find() && i < 2 ) {
+                while (matcher.find() && i < 3) {
                     outFile.write(matcher.group() + "\r\n");
                     i++;
                 }
@@ -56,7 +56,7 @@ public class Main {
             int count = 0;
             try {
                 while ((music = musicFile.readLine()) != null) {
-                    downloadUsingNIO(music, PATH_TO_MUSIC + String.valueOf(count) + ".mp3");
+                    new DownloadUsingNIO(music, PATH_TO_MUSIC + String.valueOf(count) + ".mp3").start();
                     count++;
                 }
             } catch (IOException e) {
@@ -69,21 +69,5 @@ public class Main {
     }
 
 
-    /**
-     * Метод, который осуществляет скачивание музыки
-     *
-     * @param strUrl для скачивания музыки
-     * @param file   наименование скачанного файла
-     * @throws IOException исключения
-     */
-
-    private static void downloadUsingNIO(String strUrl, String file) throws IOException {
-        URL url = new URL(strUrl);
-        ReadableByteChannel byteChannel = Channels.newChannel(url.openStream());
-        FileOutputStream stream = new FileOutputStream(file);
-        stream.getChannel().transferFrom(byteChannel, 0, Long.MAX_VALUE);
-        stream.close();
-        byteChannel.close();
-    }
 }
 
