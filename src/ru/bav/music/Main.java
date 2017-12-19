@@ -1,73 +1,87 @@
 package ru.bav.music;
 
+
 import java.io.*;
 import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * Класс, в котором реализованно скачивание музыки.
+ * Класс, в создаются потоки для скачивания музыки, формируется название треков.
  *
- * @author Barinov 1518
+ * @author Barinov 1518.
  */
 
 public class Main {
-    private static final String IN_FILE_TXT = "C:\\Users\\User\\IdeaProjects\\Thread\\src\\ru\\bav\\music\\inFile.txt";
-    private static final String OUT_FILE_TXT = "C:\\Users\\User\\IdeaProjects\\Thread\\src\\ru\\bav\\music\\outFile.txt";
-    private static final String PATH_TO_MUSIC = "C:\\Users\\User\\IdeaProjects\\Thread\\src\\ru\\bav\\music\\";
+    private static final String IN_FILE_TXT = "src\\ru\\bav\\music\\inFile.txt";
+    private static final String OUT_FILE_TXT = "src\\ru\\bav\\music\\outFile.txt";
+    private static final String PATH_TO_MUSIC = "src\\ru\\bav\\music\\download\\song";
 
-    public static void main(String[] args) {
-        first();
-        second();
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader reader = new BufferedReader(new FileReader(IN_FILE_TXT));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(OUT_FILE_TXT));
+
+        writeURL(parseLink(reader), writer);
+
+        StartDownload(3);
     }
 
+    /**
+     * Метод, который записывает весь HTML код в одну строку.
+     *
+     * @param reader файл с ссылкой на сайт.
+     * @return HTMl код страницы в виде строки.
+     * @throws IOException исключение.
+     */
 
-    private static void first() {
-        String Url;
-        try (BufferedReader inFile = new BufferedReader(new FileReader(IN_FILE_TXT));
-             BufferedWriter outFile = new BufferedWriter(new FileWriter(OUT_FILE_TXT))) {
-            while ((Url = inFile.readLine()) != null) {
-                URL url = new URL(Url);
-
-                String result;
-                try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()))) {
-                    result = bufferedReader.lines().collect(Collectors.joining("\n"));
-                }
-                Pattern email_pattern = Pattern.compile("\\s*(?<=data-url\\s?=\\s?\")[^>]*/*(?=\")");
-                Matcher matcher = email_pattern.matcher(result);
-                int i = 0;
-                while (matcher.find() && i < 3) {
-                    outFile.write(matcher.group() + "\r\n");
-                    i++;
-                }
+    private static String parseLink(BufferedReader reader) throws IOException {
+        String link;
+        String result = null;
+        while ((link = reader.readLine()) != null) {
+            URL url = new URL(link);
+            try (BufferedReader reader1 = new BufferedReader(new InputStreamReader(url.openStream()))) {
+                result = reader1.lines().collect(Collectors.joining("\n"));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * Метод для записи ссылок найденых по шаблону в outFile.txt.
+     *
+     * @param string ссылка, которую нужно записать.
+     * @param writer записывает ссылку.
+     * @throws IOException исключение.
+     */
+
+    private static void writeURL(String string, BufferedWriter writer) throws IOException {
+        Pattern pattern = Pattern.compile("\\s*(?<=data-url\\s?=\\s?\")[^>]*\\/*(?=\")");
+        Matcher matcher = pattern.matcher(string);
+
+        while (matcher.find()) {
+            writer.write(matcher.group() + "\n");
         }
     }
 
+    /**
+     * Метод создания и запуска потоков для загрузки музыки.
+     *
+     * @param countOfDownloads количество песен, которые надо скачать.
+     */
 
-    private static void second() {
-        try (BufferedReader musicFile = new BufferedReader(new FileReader(OUT_FILE_TXT))) {
+    private static void StartDownload(int countOfDownloads) {
+        try (BufferedReader downloadLinks = new BufferedReader(new FileReader(OUT_FILE_TXT))) {
             String music;
-            int count = 0;
-            try {
-                while ((music = musicFile.readLine()) != null) {
-                    new DownloadUsingNIO(music, PATH_TO_MUSIC + String.valueOf(count) + ".mp3").start();
-                    count++;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            int i = 0;
+            while ((music = downloadLinks.readLine()) != null && i < countOfDownloads) {
+                DownloadMusic thread = new DownloadMusic(music, PATH_TO_MUSIC + String.valueOf(i+1) + ".mp3");
+                thread.start();
+                i++;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
-
