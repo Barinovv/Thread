@@ -7,8 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-/**
- * Класс, в создаются потоки для скачивания музыки, формируется название треков.
+/*
+ * Класс, в котором создаются и запускаются потоки для скачивания музыки, формируется название трека.
  *
  * @author Barinov 1518.
  */
