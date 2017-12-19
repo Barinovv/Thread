@@ -10,7 +10,7 @@ import java.nio.channels.ReadableByteChannel;
 /**
  * Класс, в котором реализованно скачивание музыки.
  *
- * @author Barinov 1518. 
+ * @author Barinov 1518.
  */
 
 public class DownloadMusic extends Thread {
