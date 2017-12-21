@@ -20,10 +20,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        BufferedReader reader = new BufferedReader(new FileReader(IN_FILE_TXT));
         BufferedWriter writer = new BufferedWriter(new FileWriter(OUT_FILE_TXT));
 
-        writeURL(parseLink(reader), writer);
+        writeURL(parseLink(), writer);
 
         StartDownload(3);
     }
@@ -31,21 +30,23 @@ public class Main {
     /**
      * Метод, который записывает весь HTML код в одну строку.
      *
-     * @param reader файл с ссылкой на сайт.
      * @return HTMl код страницы в виде строки.
      * @throws IOException исключение.
      */
 
-    private static String parseLink(BufferedReader reader) throws IOException {
+    private static String parseLink() throws IOException {
         String link;
         String result = null;
-        while ((link = reader.readLine()) != null) {
-            URL url = new URL(link);
-            try (BufferedReader reader1 = new BufferedReader(new InputStreamReader(url.openStream()))) {
-                result = reader1.lines().collect(Collectors.joining("\n"));
+        try (BufferedReader reader = new BufferedReader(new FileReader(IN_FILE_TXT))) {
+            while ((link = reader.readLine()) != null) {
+                URL url = new URL(link);
+                try (BufferedReader reader1 = new BufferedReader(new InputStreamReader(url.openStream()))) {
+                    result = reader1.lines().collect(Collectors.joining("\n"));
+                }
             }
+            return result;
         }
-        return result;
+
     }
 
     /**
@@ -59,7 +60,6 @@ public class Main {
     private static void writeURL(String string, BufferedWriter writer) throws IOException {
         Pattern pattern = Pattern.compile("\\s*(?<=data-url\\s?=\\s?\")[^>]*\\/*(?=\")");
         Matcher matcher = pattern.matcher(string);
-
         while (matcher.find()) {
             writer.write(matcher.group() + "\n");
         }
@@ -76,7 +76,7 @@ public class Main {
             String music;
             int i = 0;
             while ((music = downloadLinks.readLine()) != null && i < countOfDownloads) {
-                DownloadMusic thread = new DownloadMusic(music, PATH_TO_MUSIC + String.valueOf(i+1) + ".mp3");
+                DownloadMusic thread = new DownloadMusic(music, PATH_TO_MUSIC + String.valueOf(i + 1) + ".mp3");
                 thread.start();
                 i++;
             }
@@ -85,3 +85,4 @@ public class Main {
         }
     }
 }
+
