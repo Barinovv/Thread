@@ -1,39 +1,34 @@
 package ru.bav.catchup;
 
 
-public class Catchup extends Thread {   
+public class Catchup extends Thread {
+    private int first;
+    private int second;
+    private String name;
+
+    public Catchup(int first, int second, String name) {
+        this.first = first;
+        this.second = second;
+        this.name = name;
+    }
+
     public void run() {
-        setPriority(MIN_PRIORITY);
+        setPriority(first);
         for (int i = 0; i < 4000; i++) {
             try {
                 sleep(1);
             } catch (InterruptedException e) {
             }
-            System.out.println(i + "." + "ДОГНАЛ");
+            System.out.println(name + " = " +
+                    i + "." );
             if (i == 550) {
-                setPriority(MAX_PRIORITY);
+                setPriority(second);
             }
 
         }
     }
 
-    public static void main(String[] args) {
-        Catchup potok = new Catchup();
-        Thread thread1 = new Thread();
-        potok.start();
-        potok.setPriority(MAX_PRIORITY);
-        for (int i = 0; i < 4000; i++) {
-            try {
-                thread1.sleep(1);
-            } catch (InterruptedException e) {
-            }
-            System.out.println(i + "." + "Не догнал");
-            if (i == 500) {
-                thread1.setPriority(MIN_PRIORITY);
-            }
 
-        }
-    }
 }
 
 
