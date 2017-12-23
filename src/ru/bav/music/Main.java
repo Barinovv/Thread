@@ -20,9 +20,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(OUT_FILE_TXT));
 
-        writeURL(parseLink(), writer);
+        writeURL(parseLink());
 
         StartDownload(3);
     }
@@ -53,15 +52,16 @@ public class Main {
      * Метод для записи ссылок найденых по шаблону в outFile.txt.
      *
      * @param string ссылка, которую нужно записать.
-     * @param writer записывает ссылку.
      * @throws IOException исключение.
      */
 
-    private static void writeURL(String string, BufferedWriter writer) throws IOException {
-        Pattern pattern = Pattern.compile("\\s*(?<=data-url\\s?=\\s?\")[^>]*\\/*(?=\")");
-        Matcher matcher = pattern.matcher(string);
-        while (matcher.find()) {
-            writer.write(matcher.group() + "\n");
+    private static void writeURL(String string) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(OUT_FILE_TXT))) {
+            Pattern pattern = Pattern.compile("\\s*(?<=data-url\\s?=\\s?\")[^>]*\\/*(?=\")");
+            Matcher matcher = pattern.matcher(string);
+            while (matcher.find()) {
+                writer.write(matcher.group() + "\n");
+            }
         }
     }
 
