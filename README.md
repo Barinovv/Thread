@@ -42,4 +42,4 @@
 
 Этот репозиторий содержит программу, в которой реализовано многопоточное считывание данных из файлов и запись в результирующий файл.
 
-<a href = "https://github.com/Barinovv/Thread/tree/master/src/ru/bav/MultiRead" Многопоточное считывание данных. </a>
+<a href = "https://github.com/Barinovv/Thread/tree/master/src/ru/bav/MultiRead"> Многопоточное считывание данных. </a>
