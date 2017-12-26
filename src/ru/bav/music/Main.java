@@ -1,6 +1,6 @@
 package ru.bav.music;
 
-
+import ru.bav.multiDownloader.Downloader;
 import java.io.*;
 import java.net.URL;
 import java.util.regex.Matcher;
@@ -76,7 +76,7 @@ public class Main {
             String music;
             int i = 0;
             while ((music = downloadLinks.readLine()) != null && i < countOfDownloads) {
-                DownloadMusic thread = new DownloadMusic(music, PATH_TO_MUSIC + String.valueOf(i + 1) + ".mp3");
+                Downloader  thread = new Downloader(music, PATH_TO_MUSIC + String.valueOf(i + 1) + ".mp3");
                 thread.start();
                 i++;
             }
