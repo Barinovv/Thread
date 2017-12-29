@@ -43,3 +43,15 @@
 Этот репозиторий содержит программу, в которой реализовано многопоточное считывание данных из файлов и запись в результирующий файл.
 
 <a href = "https://github.com/Barinovv/Thread/tree/master/src/ru/bav/MultiRead"> Многопоточное считывание данных. </a>
+
+# Images
+
+Это репозиторий содержит программу, которая скачивает картинки с сайта.
+
+<a href = "https://github.com/Barinovv/Thread/tree/master/src/ru/bav/Images"> Качаем картинки </a>
+
+# MultiDownloader
+
+Общий класс, с помощью которого происходит загрузка с сайта.
+
+<a href = "https://github.com/Barinovv/Thread/tree/master/src/ru/bav/multiDownloader"> Downloader </a>
