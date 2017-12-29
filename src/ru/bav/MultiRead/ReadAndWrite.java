@@ -17,22 +17,18 @@ public class ReadAndWrite extends Thread {
 
     ReadAndWrite(String adress, BufferedWriter writer) {
         this.adress = adress;
-        ReadAndWrite.writer = writer;
+        this.writer = writer;
     }
 
     public void run() {
         String string;
         try (BufferedReader reader = new BufferedReader(new FileReader(adress))) {
-            while ((string = reader.readLine()) != null){
+            while ((string = reader.readLine()) != null) {
                 writer.write(string + "\n");
                 yield();
             }
-            }catch (IOException e) {
-
-                e.printStackTrace();
-
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-
 }
